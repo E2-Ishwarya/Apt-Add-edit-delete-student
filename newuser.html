@@ -1,0 +1,176 @@
+<!--Side Bar-->
+<section class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 noPadding">
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-12">
+                <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12 innerDiv h-100">
+                    <div ng-include="'views/includes/sidebar.html'"></div>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-12">
+                <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12 innerDiv h-100" ng-if="tabVisible != 2">
+                    <div>
+                          <p class="divHeading" >Student Details</p>
+                    </div>
+                      <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12">
+                          <div class="form-group row" align="right">
+                            <div class="col-md-offset-3 col-md-9" align="right">
+                                <a id="btn-editDevice" data-bs-target="btn btn-primary" data-bs-toggle="exampleModal" ng-click="viewAddAccount()" class="btn btn-primary" >Add student</a>
+                            </div>
+                          </div>
+                      <div class="form-group search-table-outter">
+                        <table ng-table ="tableParams" ng-class="accessRole == 'SuperUser' ? 'table superUserTableAcc display responsive table-scrollx' : 'table display responsive table-scrollx'" >
+                                 <tr ng-show="data1.length!=0" ng-repeat="item in data1" >
+                                       <td data-title="'Student ID'" sortable="'studentId'">{{item.studentId}}</td>
+                                         <td data-title="'Student Name'" sortable="'studentName'"  >{{item.name}}</td>   
+                                         <td data-title="'Student age'" sortable="'studentAge'"  >{{item.studentAge}}</td> 
+                                         <td data-title="'Edit'" ><img src="images/edit.png" width="24" height="24" ng-click="viewUpdateAccount(item)" /></td>
+                                        <td data-title="'Delete'"><img src="images/delete.png" width="24" height="24" ng-click="deleteAccountModal(item.studentId,item.name,item.studentAge)" /></td>   
+                                </tr>    
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+            		<!-- add popup -->
+                    <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                        <div class="modal-dialog" role="document" style="max-width:  1000px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Student Details</h4>
+                                </div>
+                                <div class="modal-body" style="font-size:22px;text-align: center;" >
+                                    <div class="modal-body">
+                                        <form name="addAccountform" id="addAccountform"class="form-horizontal" role="form" novalidate>
+                                                 <div class="form-group row">
+                                                  <label for="studentId" class="col-md-4 control-label">Student Id </label>
+                                                  <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="studentId" ng-model="accountdata.studentId" placeholder="Enter ID" autocomplete="off">
+                                                    <p class="text-danger errorStyle" ng-show="addAccountform.studentId.$touched && addAccountform.studentId.$invalid">Enter ID</p>
+                                                 </div>
+                                               </div>    
+                                               <div class="form-group row">
+                                                    <label for="studentName" class="col-md-4 control-label"> Student Name <span class="mandatory">*</span></label>
+                                                     <div class="col-md-8">
+                                                        <input type="text" class="form-control" name="studentName" ng-model="accountdata.name" placeholder="Enter Student Name"
+                                                        required  autocomplete="off">
+                                                        <p class="text-danger errorStyle" ng-show="addAccountform.name.$touched && addAccountform.name.$invalid">Enter Student Name</p>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <label for="studentAge" class="col-md-4 control-label">Student Age</label>
+                                                      <div class="col-md-8">
+                                                        <input type="text" class="form-control" name="studentAge" ng-model="accountdata.studentAge" placeholder="Enter age" autocomplete="off">
+                                                        <p class="text-danger errorStyle" ng-show="addAccountform.studentAge.$touched && addAccountform.studentAge.$invalid">Enter age</p>
+                                                      </div>
+                                                </div>
+                                                <div class="col-md-12 col-lg-12 mt-10 " style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="createStudents()" >submit</button>&nbsp;
+                                                    <button type="button" class="btn btn-primary col-xs-12 col-md-2" data-dismiss="modal">Cancel</button>
+                                                </div>
+                                       </form>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                </div>      
+             <!-- edit popup -->
+             <div class="modal" id="editPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document" style="max-width:  1000px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit student details</h4>
+                        </div>
+                        <div class="modal-body" style="font-size:22px;text-align: center;" >
+                            
+                            <div class="modal-body">
+                               <form name="updateAccountform" id="updateAccountform" class="form-horizontal" role="form" novalidate>
+                                        <input type="hidden" name="createdEpochMs" ng-model="editData.createdEpochMs" >
+                                        <input type="hidden" name="password" ng-model="editData.password" >
+                                        <input type="hidden" name="accountId" ng-model="editData.accountId" >
+
+                                        <div class="form-group row">
+                                            <label for="studentId" class="col-md-4 control-label">Student Id <span class="mandatory">*</span></label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" name="studentId" ng-model="editData.studentId" placeholder="Enter ID"
+                                                required  autocomplete="off">
+                                                <p class="text-danger errorStyle" ng-show="updateAccountform.studentId.$touched && updateAccountform.studentId.$invalid">Enter Student Id</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="studentName" class="col-md-4 control-label">Student Name</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" name="studentName" ng-model="editData.name" placeholder="Enter name" autocomplete="off">
+                                                <p class="text-danger errorStyle" ng-show="updateAccountform.name.$touched && updateAccountform.name.$invalid">Enter Student Name</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="studentAge" class="col-md-4 control-label">Student Age</label>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" name="studentAge" ng-model="editData.studentAge" placeholder="Enter age" autocomplete="off">
+                                                <p class="text-danger errorStyle" ng-show="updateAccountform.studentAge.$touched && updateAccountform.studentAge.$invalid">Enter Student Age</p>
+                                            </div>
+                                        </div>
+                                      <div class="col-md-12 col-lg-12 mt-10" style="display: flex;align-items: center;justify-content: center;">
+                                            <button  type="submit" ng-disabled="updateAccountform.$invalid" class="btn btn-primary  col-xs-12 col-md-2" ng-click="updateAccount(editData)" >Update</button>&nbsp;
+                                            <button  type="button" class="btn btn-primary  col-xs-12 col-md-2" ng-click="cancelUpdate()">Cancel</button>
+                                        </div>
+                                      
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+             <!-- Confirmation popup -->
+             <div class="modal" id="UserConfirmPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document" style="max-width:  1000px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Student</h4>
+                        </div>
+                        <div class="modal-body" style="font-size:22px;text-align: center;" >
+                            <h3>Are you sure you want to delete?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" ng-click="deleteAccount(deleteitem.studentId,deleteitem.name,deleteitem.studentAge)" >Delete</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  <!--<div class="col-md-12 col-lg-12 col-sm-12  col-xs-12">
+                        <div class="form-group row" align="right">
+                            <div class="col-md-offset-3 col-md-9" align="right">
+                                <a  class="btn btn-primary" id="open-button" onclick="openForm()" >Add Account</a>
+                            </div>
+                        </div>-->
+                        <!---- <div class="form-popup" id="myForm">
+              <form class="form-container">
+                <h1>Login</h1>
+            
+                <label for="number1"><b>NUMBER1</b></label>
+                <input type="number" placeholder="Enter number1" name="number1" required>
+            
+                <label for="number2"><b>NUMBER2</b></label>
+                <input type="number" placeholder="Enter number2" name="number2" required>
+            
+                <button type="submit" class="btn" ng-click="getNumbers()">ADD</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+              </form>
+            </div>
+            
+            <script>
+            function openForm() {
+              document.getElementById("myForm").style.display ="block";
+            }
+            function closeForm() {
+              document.getElementById("myForm").style.display ="none";
+            }
+            </script> -->
+
