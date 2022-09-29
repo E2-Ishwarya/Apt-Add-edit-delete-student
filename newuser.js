@@ -77,12 +77,12 @@ angular
 						$scope.tableParams = new NgTableParams({
                             page: 1,
                             count: 10,
-                            sorting: { userName: "asc" } 
+                            sorting: { studentId: "asc" } 
                         }, {
                             getData: function(params) {
-                                params.total(data.data.length);
-                                var orderedData = params.sorting() ?$filter('orderBy')(data.data, params.orderBy()) :data.data;
-                                params.settings({ counts: data.data.length > 10 ? [10, 25, 50,100] : []});
+                                params.total(data.data.Items.length);
+                                var orderedData = params.sorting() ?$filter('orderBy')(data.data.Items, params.orderBy()) :data.data.Items;
+                                params.settings({ counts: data.data.Items.length > 10 ? [10, 25, 50,100] : []});
                                 $scope.data1 = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
                                 return $scope.data1;
                             }
@@ -100,6 +100,8 @@ angular
 		var data = $scope.accountdata;
 		$http.post(Url, data, config)
 			.then(function (data, status, headers, config) {
+				$('#exampleModal').modal('hide');
+				 $scope.accountdata = {};
 				if (data.data.status == 0) {
 					$scope.users="";
 					alert('warning', 'Error : ', data.data.errorMessage, 5000);
@@ -107,10 +109,19 @@ angular
 				else {
 					getStudentList();
 				}
+			},function (data, status, header, config) {
+				$('#exampleModal').modal('hide');
+				$scope.accountdata = {};
+				if (data.data.status == 0) {
+					alert('warning', 'Error : ', data.data.errorMessage, 5000);
+				} else {
+					alert('warning', 'Error : ', 'Server Failed to Respond', 5000);
+				}
 			})
 	}
 
 	$scope.viewAddAccount  = function (){
+		// $scope.accountdata = {};
 		$scope.addAccountform.$setPristine();
 		$scope.addAccountform.$setUntouched();
 		$('#exampleModal').modal('show');
@@ -141,6 +152,7 @@ angular
 		alert('warning', '', 'Please Wait ...', 8000);
 		$http.post(Url, editData, config)
 			.then(function (data, status, headers, config) {
+				$('#resetPopup').modal('hide');
 				$('.modal').modal('hide');
 				$scope.editData = {};
 					alert('success', 'Success!', 'Account updated successfully.', 5000);
