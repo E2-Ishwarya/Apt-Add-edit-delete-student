@@ -1,0 +1,138 @@
+<section class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 noPadding">
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-12">
+                <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12 innerDiv h-100">
+                    <div ng-include="'views/includes/sidebar.html'"></div>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-12">
+                <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12 innerDiv h-100" ng-if="tabVisible != 2">
+                    <div>
+                        <p class="divHeading">Category</p>
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12">
+                        <div class="form-group row" align="right">
+                            <div class="col-md-offset-3 col-md-9" align="right">
+                                <a id="btn-editDevice"  ng-click="viewAddAccount()" class="btn btn-primary" >Add category</a>
+                            </div>
+                        </div>
+                        <div class="form-group search-table-outter">
+                           
+                            <table ng-table ="tableParams" ng-class="accessRole == 'SuperUser' ? 'table superUserTableAcc display responsive table-scrollx' : 'table display responsive table-scrollx'" >
+                                    <tr ng-show="data1.length!=0" ng-repeat="item in data1" >
+                                        <td data-title="'category ID'" sortable="'category_id'"  >{{item.category_id}}</td>
+                                        <td data-title="'category Name'" sortable="'categoryName'"  >{{item.categoryName}}</td>
+                                        <!-- <td data-title="'Account ID'" sortable="'userName'"  >{{item.userName}}</td> -->
+                                        <td data-title="'Edit'" ><img src="images/edit.png" width="24" height="24" ng-click="viewUpdateAccount(item)" /></td>
+                                        <td data-title="'Delete'"><img src="images/delete.png" width="24" height="24" ng-click="deleteAccountModal(item.category_id,item.categoryName)" /></td>
+                                    </tr>	
+                            </table>
+
+                    </div>
+                 </div>
+                </div>
+            </div>
+            <!-- add popup -->
+            <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                <div class="modal-dialog" role="document" style="max-width:  1000px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add category Details</h4>
+                        </div>
+                        <div class="modal-body" style="font-size:22px;text-align: center;" >
+                            <div class="modal-body">
+                                <form name="addAccountform" id="addAccountform"class="form-horizontal" role="form" novalidate>
+                                         <div class="form-group row">
+                                          <label for="category_id" class="col-md-4 control-label">category Id <span class="mandatory">*</span></label>
+                                          <div class="col-md-8">
+                                            <input type="text" class="form-control" name="category_id" ng-model="accountdata.category_id" placeholder="Enter ID" required autocomplete="off">
+                                            <p class="text-danger errorStyle" ng-show="addAccountform.category_id.$touched && addAccountform.category_id.$invalid">Enter ID</p>
+                                         </div>
+                                       </div>  
+                                       <div class="form-group row">
+                                            <label for="categoryName" class="col-md-4 control-label"> category Name <span class="mandatory">*</span></label>
+                                             <div class="col-md-8">
+                                                <input type="text" class="form-control" name="categoryName" ng-model="accountdata.categoryName" placeholder="Enter  category Name" required  autocomplete="off">
+                                                <p class="text-danger errorStyle" ng-show="addAccountform.categoryName.$touched && addAccountform.categoryName.$invalid">Enter category Name</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 mt-10 " style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
+                                            <button  type="submit" ng-disabled="addAccountform.$invalid" class="btn btn-primary  col-xs-12 col-md-2" ng-click="createCategory()" >submit</button>&nbsp;
+                                            <button type="button" class="btn btn-primary col-xs-12 col-md-2" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                        <div style="text-align: left;">
+                                            <p style="font-size: 13px">
+                                                <span class="mandatory">*</span>Mandatory fields
+                                            </p>
+                                        </div>
+                               </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+                 <!-- edit popup -->
+                 <div class="modal" id="editPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document" style="max-width:  1000px;">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Edit student details</h4>
+                            </div>
+                            <div class="modal-body" style="font-size:22px;text-align: center;" >
+                                
+                                <div class="modal-body">
+                                   <form name="updateAccountform" id="updateAccountform" class="form-horizontal" role="form" novalidate>
+                                            <input type="hidden" name="createdEpochMs" ng-model="editData.createdEpochMs" >
+                                            <input type="hidden" name="password" ng-model="editData.password" >
+                                            <input type="hidden" name="accountId" ng-model="editData.accountId" >
+    
+                                            <div class="form-group row">
+                                                <label for="category_id" class="col-md-4 control-label">category Id <span class="mandatory">*</span></label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="category_id" ng-model="editData.category_id" placeholder="Enter ID"
+                                                    required  autocomplete="off" readonly="readonly">
+                                                    <p class="text-danger errorStyle" ng-show="updateAccountform.category_id.$touched && updateAccountform.category_id.$invalid">Enter category Id</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="categoryName" class="col-md-4 control-label">category Name</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" class="form-control" name="categoryName" ng-model="editData.categoryName" placeholder="Enter name" autocomplete="off">
+                                                    <p class="text-danger errorStyle" ng-show="updateAccountform.categoryName.$touched && updateAccountform.categoryName.$invalid">Enter category Name</p>
+                                                </div>
+                                            </div>
+                                          <div class="col-md-12 col-lg-12 mt-10" style="display: flex;align-items: center;justify-content: center;">
+                                                <button  type="submit" ng-disabled="updateAccountform.$invalid" class="btn btn-primary  col-xs-12 col-md-2" ng-click="updateAccount(editData)" >Update</button>&nbsp;
+                                                <button  type="button" class="btn btn-primary  col-xs-12 col-md-2" ng-click="cancelUpdate()">Cancel</button>
+                                            </div>
+                                          
+                                    </form>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                  <!-- Confirmation popup -->
+             <div class="modal" id="UserConfirmPopup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document" style="max-width:  1000px;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete category</h4>
+                        </div>
+                        <div class="modal-body" style="font-size:22px;text-align: center;" >
+                            <h3>Are you sure you want to delete?</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" ng-click="deleteAccount(deleteitem.category_id,deleteitem.categoryName)" >Delete</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
+
+</section>

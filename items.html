@@ -1,0 +1,96 @@
+<section class="container">
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 noPadding">
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-12">
+                <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12 innerDiv h-100">
+                    <div ng-include="'views/includes/sidebar.html'"></div>
+                </div>
+            </div>
+            <div class="col-md-9 col-lg-9 col-sm-9 col-xs-12">
+                <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12 innerDiv h-100" ng-if="tabVisible != 2">
+                    <div>
+                        <p class="divHeading">Items</p>
+                    </div>
+                    <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12 mt-10">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 selectContainer noPaddingRight noPaddingResponsive">
+                            <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12 noPaddingLeftRight">
+                                <div class="col-md-9 col-lg-12 col-sm-12 col-xs-12 noPaddingLeftRight" align="right">
+                                    <a id="btn-editDevice" ng-show="accessRole == 'SuperUser' || accessRole == 'APTAdmin' || accessRole == 'AccountAdmin' "ng-click="viewCommunityAdd()" class="btn btn-primary" ><i class="icon-hand-right"></i>Add items</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: inline;">
+                            <table ng-table ="tableParams1" class="table communityManagement display responsive table-scrollx" ng-class="{'communityManagementAccountAdmin' : accessRole == 'AccountAdmin' }" >
+                                <tr ng-show="data1.length!=0" ng-repeat="item in data1" >
+                                    <td data-title="'item_id'" sortable="'item_id'" >{{item.item_id}}</td>
+                                    <td data-title="' itemName'" sortable="' itemName'"  >{{item. itemName}}</td>
+                                    <td data-title="'categoryName'" sortable="'categoryName'" >{{item.categoryName}}</td>
+                                    <td data-title="'Edit'" ><img src="images/edit.png" width="24" height="24" ng-click="viewUpdateCommunity(item)" id="editButton"/></td>
+                                    <td data-title="'Delete'" ng-if="accessRole == 'SuperUser' || accessRole == 'APTAdmin' || accessRole == 'AccountAdmin' "><img src="images/delete.png" width="24" height="24" ng-click="deleteCommunityModal(item.communityId)" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+           <!-- add popup -->
+				<div class="modal" id="CommunityAddModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document" style="max-width:  1000px;">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">Add items</h4>
+							</div>
+							<div class="modal-body" style="font-size:22px;text-align: center;" >	
+									<div class="modal-body">
+										<form id="communityForm" name="communityForm"  class="form-horizontal" role="form" novalidate>
+											<div>
+												<div class="form-group row" name="accountSelectBox" >
+													<label for="accountName" class="col-md-4 control-label">
+														Select category <span class="mandatory">*</span>
+													</label>
+													<div class="col-md-8">
+														<select name="category_id" id="category_id" class="form-control" required ng-model="Communitydata.category_id">
+															<option value="">Select category Name</option>
+															<option ng-repeat="item in data1" value="{{item.category_id}}">{{item.categoryName}}</option>
+														</select>
+														<p class="text-danger errorStyle" ng-show="communityForm.category_id.$touched && communityForm.category_id.$invalid" >Select category Name</p>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="item_id" class="col-md-4 control-label">Item ID <span class="mandatory">*</span></label>
+												<div class="col-md-8">
+													<input type="text" class="form-control" name="item_id" ng-model="Communitydata.item_id" 
+													placeholder="Item ID" required autocomplete="off">
+													<p class="text-danger errorStyle" ng-show="communityForm.item_id.$touched && communityForm.item_id.$invalid" >Enter ID</p>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="address1" class="col-md-4 control-label">Item Name</label>
+												<div class="col-md-8">
+													<input type="text" class="form-control" name="itemName" ng-model="Communitydata.itemName" placeholder="Address" autocomplete="off">
+													<p class="text-danger errorStyle" ng-show="communityForm.itemName.$touched && communityForm.itemName.$invalid">Enter Item Name</p>
+												</div>
+											</div>
+                                            <div class="form-group row mt-10">
+												<div class="col-md-12 col-lg-12" style="display: flex;align-items: center;justify-content: center;">
+													<button id="btn-signup" type="submit" ng-click="createItem()" ng-disabled="communityForm.$invalid" class="btn btn-primary col-xs-12 col-md-2" ng-disabled="" >Add</button>&nbsp;
+													<button id="btn-cancel" type="button" class="btn btn-primary col-xs-12 col-md-2" ng-click="ModalCancel()">Cancel</button>
+												</div>
+											</div>
+											<div style="text-align: left;">
+												<p style="font-size: 13px">
+													<span class="mandatory">*</span>Mandatory fields
+												</p>
+											</div>
+										</form>
+									</div>
+							</div>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+        </div>
+   </div>
+
+</section>
