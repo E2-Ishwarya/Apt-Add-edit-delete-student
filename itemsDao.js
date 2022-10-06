@@ -51,7 +51,6 @@ itemsDao.addItems = function (data,callback) {
             }
         });
     }
-
 }
 itemsDao.deleteItems = function (data, callback) {
   console.log("ffffffffkjgnj",data);
@@ -60,7 +59,7 @@ itemsDao.deleteItems = function (data, callback) {
     Key:{
         "item_id": data.item_id
     }
-  };
+  }; console.log("hello",data.item_id)
   docClient.delete(params, function (err, data) {
       if (err) {
         console.log("error", err);
@@ -71,31 +70,4 @@ itemsDao.deleteItems = function (data, callback) {
       }
   });
 }
-itemsDao.getCategory1 = function(callback) {
-var params = {
-      TableName: 'NodeJS-Items',
-};
-var items = [];
-items = items.concat(data.Items);
-  docClient.scan(params, onScan);   
-
-  function onScan(err, data) {
-      if (err) {
-          callback(err, null)
-      } else {
-        items = items.concat(data.Items);
-        console.log(data.Items);
-        var data = {
-            "Items" : items,
-            "Count" : items.length
-        };
-              callback(null, data);
-              console.log(data);
-          }
-      }
-  }
-
-
-
-
 module.exports = itemsDao;

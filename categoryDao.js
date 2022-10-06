@@ -71,6 +71,30 @@ categoryDao.deleteCategory = function (data, callback) {
       }
   });
 }
+/*categoryDao.getCategory1 = function(callback) {
+  var params = {
+        TableName: 'NodeJS-Category',
+  };
+  var items = [];
+  items = items.concat(data.Items);
+    docClient.scan(params, onScan);   
+  
+    function onScan(err, data) {
+        if (err) {
+            callback(err, null)
+        } else {
+          items = items.concat(data.Items);
+          console.log(data.Items);
+          var data = {
+              "Items" : items,
+              "Count" : items.length
+          };
+                callback(null, data);
+                console.log(data);
+            }
+        }
+    }
+  */
   
 
 
