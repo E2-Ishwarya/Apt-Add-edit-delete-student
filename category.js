@@ -29,6 +29,15 @@ angular
 			"Content-Type": "application/json"
 		}
 	};
+
+	var uploadConfig = {
+		headers: {
+			"authorization": $window.localStorage.getItem("userToken"),
+			"username": $window.localStorage.getItem("username"),
+			"Content-Type": undefined
+		}
+	};
+
 	getCategoryList();
 
 	function getCategoryList() {
@@ -54,7 +63,13 @@ angular
 		var Url = API_URL + 'api/v1/createCategory';
 		var data = $scope.accountdata;
 		console.log(data);
-		$http.post(Url, data, config)
+		var categoryImage = document.getElementById("categoryImage").files[0];
+		var formData = new FormData(); 
+		formData.append('category_id', $scope.accountdata.category_id);
+		formData.append('categoryName', $scope.accountdata.categoryName);
+		formData.append('categoryImage',categoryImage);
+
+		$http.post(Url, formData, uploadConfig)
 			.then(function (data, status, headers, config) {
 				$('#exampleModal').modal('hide');
 				 $scope.accountdata = {};
@@ -142,6 +157,84 @@ angular
 						getCategoryList();
 					}
 				})
-	}
+	} 
+  
 
+	/*var uploadConfig = {
+		headers: {
+			"authorization": $window.localStorage.getItem("userToken"),
+			"username": $window.localStorage.getItem("username"),
+			"Content-Type": undefined
+		}
+	}; 
+
+
+	var accId = $window.localStorage.getItem("accountId");
+	$scope.firmwareAssignPage = function(firmwareVersion,createdEpochMs,firmwareName,compatibility){
+		$window.localStorage.setItem("firmwareVersion", firmwareVersion);
+		$window.localStorage.setItem("firmwareName", firmwareName);
+		$state.go("main.firmwareAssign");
+	};
+
+	var accessRole = $window.localStorage.getItem("accessRole");
+	$scope.accessRole = accessRole;
+
+	var compatibility = $window.localStorage.getItem("compatibility");
+	$scope.compatibility = compatibility;
+	
+	var firmwareVersion = $window.localStorage.getItem("firmwareVersion");
+	$scope.firmwareVersion = firmwareVersion;
+
+	var firmwareName = $window.localStorage.getItem("firmwareName");
+	$scope.firmwareName = firmwareName;
+
+   $scope.uploadImage = function () {
+			var notes = document.getElementById("notes").value;
+            var firmwareName = document.getElementById("firmwareName").value;
+            var firmwareVersion = document.getElementById("firmwareVersion").value;
+            var userName = document.getElementById("userNameTemp").value;
+            var Url = API_URL + 'api/v1/cateUpload';
+			var formData = new FormData(); 
+			formData.append('firmwareName', firmwareName);
+			formData.append('notes', notes);
+			formData.append('firmwareVersion', tmpFileName);
+			formData.append('userName', userName);
+			formData.append('firmWareUpload',firmWareUpload);
+			alert('warning', 'Please Wait', '.....', 40000);
+			$http.post(Url, formData,uploadConfig)
+			.then(function (data, status, headers, uploadConfig) {
+				if (data.data.status == 0) {
+					alert('warning', 'Error : ', data.data.errorMessage, 5000);
+				}
+				else {
+					document.getElementById("firmwareVersion").value="";
+					document.getElementById("firmwareName").value="";
+					document.getElementById("firmWareUpload").value="";
+					alert('success', 'Success!', data.data.message, 5000);
+				}
+			},function (data, status, header, uploadConfig) {
+					if (data.data.status == 0) {
+						alert('warning', 'Error : ', data.data.errorMessage, 5000);
+					} else {
+						alert('warning', 'Error : ', 'Server Failed to Respond');
+					}
+				}); 
+		},function (data, status, header, config) {
+			if (data) {
+				alert('warning', 'Error : ', data.errorMessage, 5000);
+			} else {
+				alert('warning', 'Error : ', 'No Response from Server', 5000);
+			}
+		}	 */
 });
+
+
+ 
+
+ 
+
+
+
+
+
+

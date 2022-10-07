@@ -11,6 +11,7 @@
                     <div>
                         <p class="divHeading">Category</p>
                     </div>
+
                     <div class="col-md-12 col-lg-12 col-sm-12  col-xs-12">
                         <div class="form-group row" align="right">
                             <div class="col-md-offset-3 col-md-9" align="right">
@@ -57,6 +58,14 @@
                                                 <p class="text-danger errorStyle" ng-show="addAccountform.categoryName.$touched && addAccountform.categoryName.$invalid">Enter category Name</p>
                                             </div>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="ssid" class="col-md-3 control-label">Select image to upload </label>
+                                            <div class="col-md-9">
+                                                <input type="file" class="form-control" style="height: 100%;" id="categoryImage" name="firmWareUpload" ng-model="firmWareUpload" placeholder="Select Firmware file"
+                                                 autocomplete="off">
+                                            </div>
+                                        </div>
+                            
                                         <div class="col-md-12 col-lg-12 mt-10 " style="display: flex;align-items: center;justify-content: center;margin-bottom: 10px;">
                                             <button  type="submit" ng-disabled="addAccountform.$invalid" class="btn btn-primary  col-xs-12 col-md-2" ng-click="createCategory()" >submit</button>&nbsp;
                                             <button type="button" class="btn btn-primary col-xs-12 col-md-2" data-dismiss="modal">Cancel</button>
