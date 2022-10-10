@@ -23,6 +23,23 @@ docClient.scan(params, function(err, data) {
 });
 }
 
+/*categoryDao.getImage= function (callback) {
+  var params = {
+    TableName: 'NodeJS-Category'
+  };
+  docClient.scan(params, function(err, data) {
+    if (err) {
+      console.log("Error", err);
+      callback(err, null)
+    } else {
+      
+      console.log("Success", data);
+      console.log(data)
+      callback(null, data)
+    }
+  });
+  }*/
+
 categoryDao.addCategory = function (data,callback) {  
   var params = {
     TableName: 'NodeJS-Category',
@@ -70,6 +87,24 @@ categoryDao.deleteCategory = function (data, callback) {
         callback(null, data);
       }
   });
+}
+
+categoryDao.uploadInformation = function (data, callback) {
+  if (data != null) {
+    var params = {
+      TableName: 'NodeJS-Category',
+      Item: data
+    };
+    console.log("yes",data.categoryImage)  
+      docClient.put(params, function (err, data) {
+          if (err) {
+              callback(err, null)
+          } else {
+              callback(null, data)
+          }
+      });
+  }
+
 }
 /*categoryDao.getCategory1 = function(callback) {
   var params = {
