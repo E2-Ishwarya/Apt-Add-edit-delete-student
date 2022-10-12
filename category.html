@@ -24,7 +24,8 @@
                                     <tr ng-show="data1.length!=0" ng-repeat="item in data1" >
                                         <td data-title="'category ID'" sortable="'category_id'"  >{{item.category_id}}</td>
                                         <td data-title="'category Name'" sortable="'categoryName'"  >{{item.categoryName}}</td>
-                                        <!-- <td data-title="'Account ID'" sortable="'userName'"  >{{item.userName}}</td> -->
+                                          <td data-title="'category Image'" sortable="'categoryImage'"  ><img src="api/v1/getImageview?fileName={{item.categoryImage}}" width="24" height="24" /></td>
+                                         <!--<td data-title="'Account ID'" sortable="'userName'"  >{{item.userName}}</td> -->
                                         <td data-title="'Edit'" ><img src="images/edit.png" width="24" height="24" ng-click="viewUpdateAccount(item)" /></td>
                                         <td data-title="'Delete'"><img src="images/delete.png" width="24" height="24" ng-click="deleteAccountModal(item.category_id,item.categoryName)" /></td>
                                     </tr>	
@@ -112,8 +113,15 @@
                                                     <p class="text-danger errorStyle" ng-show="updateAccountform.categoryName.$touched && updateAccountform.categoryName.$invalid">Enter category Name</p>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="ssid" class="col-md-3 control-label">Select image to upload </label>
+                                                <div class="col-md-9">
+                                                    <input type="file" class="form-control" style="height: 100%;" id="updateCategoryImage" name="categoryImage" ng-model="editData.categoryImage"  placeholder="Select categoryImage">
+                                                     <p class="text-danger errorStyle" ng-show="updateAccountform.categoryImage.$touched && updateAccountform.categoryImage.$invalid"></p>
+                                                </div>
+                                            </div>
                                           <div class="col-md-12 col-lg-12 mt-10" style="display: flex;align-items: center;justify-content: center;">
-                                                <button  type="submit" ng-disabled="updateAccountform.$invalid" class="btn btn-primary  col-xs-12 col-md-2" ng-click="updateAccount(editData)" >Update</button>&nbsp;
+                                                <button  type="submit" ng-disabled="updateAccountform.$invalid" class="btn btn-primary  col-xs-12 col-md-2" ng-click="updateAccount()" >Update</button>&nbsp;
                                                 <button  type="button" class="btn btn-primary  col-xs-12 col-md-2" ng-click="cancelUpdate()">Cancel</button>
                                             </div>
                                           

@@ -89,7 +89,7 @@ categoryDao.deleteCategory = function (data, callback) {
   });
 }
 
-categoryDao.uploadInformation = function (data, callback) {
+/*categoryDao.uploadInformation = function (data, callback) {
   if (data != null) {
     var params = {
       TableName: 'NodeJS-Category',
