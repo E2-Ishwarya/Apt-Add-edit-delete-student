@@ -1,0 +1,15 @@
+{
+  "name": "library_database",
+  "version": "1.0.0",
+  "description": "users and books details",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ish",
+  "license": "ISC",
+  "dependencies": {
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.21.4"
+  }
+}

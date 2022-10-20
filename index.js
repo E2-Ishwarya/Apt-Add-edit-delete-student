@@ -1,0 +1,8 @@
+var express = require('express')
+var app = express()
+app.use(express.json())
+const User_details = require('./router/User_details')
+const Book_details = require('./router/Book_details')
+app.use('/user', User_details)
+app.use('/book', Book_details)
+app.listen(8034)
